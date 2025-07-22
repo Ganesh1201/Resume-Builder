@@ -17,11 +17,16 @@
         <option value="template3">Template 3</option>
       </select>
     </div>
+    <button id="dark-mode-toggle" title="Toggle dark mode">🌙</button>
   </header>
   <main>
     <section id="form-section">
       <h2>Enter Your Information</h2>
       <form id="resume-form">
+        <div class="form-group">
+          <label for="profile-image">Profile Image:</label>
+          <input type="file" id="profile-image" name="profile-image" accept="image/*">
+        </div>
         <div class="form-group">
           <label for="name">Full Name:</label>
           <input type="text" id="name" name="name" required>
