@@ -25,18 +25,13 @@ chatbotClose.onclick = function() {
 // ChatGPT API integration (for demo/testing only)
 async function askChatGPT(message) {
   showAISuggestion('Thinking...');
-  const apiKey = 'YOUR_OPENAI_API_KEY'; // TODO: Replace with your OpenAI API key
   try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('http://localhost:3001/api/chat', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + apiKey
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
-        messages: [{role: 'user', content: message}]
-      })
+      body: JSON.stringify({ message })
     });
     const data = await response.json();
     const reply = data.choices?.[0]?.message?.content || 'No response';
