@@ -3,6 +3,8 @@ const form = document.getElementById('resume-form');
 const dynamicSections = document.getElementById('dynamic-sections');
 const previewFrame = document.getElementById('resume-preview');
 const templateSelector = document.getElementById('template');
+const profileImageInput = document.getElementById('profile-image');
+let profileImageDataUrl = '';
 
 // Section counters
 let sectionCounts = {
@@ -31,7 +33,8 @@ let resumeData = {
   languages: [],
   awards: [],
   interests: [],
-  references: []
+  references: [],
+  profileImage: ''
 };
 
 // Helper to create section forms
@@ -133,6 +136,34 @@ function addSection(type) {
 form.oninput = updateResumeData;
 templateSelector.onchange = updatePreview;
 
+profileImageInput.onchange = function(e) {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      profileImageDataUrl = evt.target.result;
+      document.getElementById('profile-image-preview')?.remove();
+      const img = document.createElement('img');
+      img.src = profileImageDataUrl;
+      img.className = 'profile-image-preview';
+      profileImageInput.parentElement.insertBefore(img, profileImageInput);
+      updateResumeData();
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
+// Dark mode toggle logic
+const darkModeToggle = document.getElementById('dark-mode-toggle');
+darkModeToggle.onclick = function() {
+  document.body.classList.toggle('dark-mode');
+  localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+};
+// On load, set dark mode if preferred
+if (localStorage.getItem('darkMode') === 'true') {
+  document.body.classList.add('dark-mode');
+}
+
 function updateResumeData() {
   const formData = new FormData(form);
   resumeData.name = formData.get('name') || '';
@@ -206,6 +237,7 @@ function updateResumeData() {
       relation: section.querySelector('[placeholder="Relation"]').value
     });
   });
+  resumeData.profileImage = profileImageDataUrl;
   updatePreview();
 }
 
@@ -216,6 +248,7 @@ function updatePreview() {
     .then(templateHtml => {
       // Replace placeholders in template
       let html = templateHtml
+        .replace(/{{profileImage}}/g, resumeData.profileImage ? `<img src="${resumeData.profileImage}" class="profile-image-preview" alt="Profile Image">` : '')
         .replace(/{{name}}/g, resumeData.name)
         .replace(/{{email}}/g, resumeData.email)
         .replace(/{{phone}}/g, resumeData.phone)
