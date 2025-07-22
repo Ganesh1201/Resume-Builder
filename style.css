@@ -68,9 +68,14 @@ button {
   cursor: pointer;
   font-size: 1rem;
   margin-top: 0.5rem;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(79,140,255,0.08);
 }
 button:hover {
   background: #357ae8;
+}
+button:active {
+  box-shadow: 0 1px 4px rgba(79,140,255,0.15);
 }
 #resume-preview {
   width: 100%;
@@ -161,6 +166,51 @@ button:hover {
 }
 #ai-send-btn:hover {
   background: #357ae8;
+}
+body.dark-mode {
+  background: #181a1b;
+  color: #f1f1f1;
+}
+body.dark-mode header {
+  background: #232946;
+  color: #eebbc3;
+}
+body.dark-mode #form-section, body.dark-mode #preview-section {
+  background: #232946;
+  color: #eebbc3;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+body.dark-mode button, body.dark-mode #ai-chatbot-circle, body.dark-mode #ai-chatbot-window {
+  background: #393e46;
+  color: #eebbc3;
+}
+body.dark-mode button:hover, body.dark-mode #ai-chatbot-circle:hover {
+  background: #232946;
+}
+#dark-mode-toggle {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  margin-left: 1rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+#dark-mode-toggle:hover {
+  color: #ffd966;
+}
+.profile-image-preview {
+  display: block;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  border: 2px solid #4f8cff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+body.dark-mode .profile-image-preview {
+  border-color: #eebbc3;
 }
 @media (max-width: 900px) {
   main {
